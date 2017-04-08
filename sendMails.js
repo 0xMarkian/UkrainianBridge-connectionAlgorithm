@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer')
 const xoauth2 = require('xoauth2')
 
-const createEmailText = require('./createEmailText.js').default
+import createEmailText from './createEmailText.js'
 import logger from './logger'
 import credentials from './config/credentials'
 
@@ -45,9 +45,9 @@ export default (
     console.log(message)
     logger(message)
 
+    console.log(pairs)
     if(pairs.length === 0) return
-
-    const chatAdress = `${communicationPlatformAdress}${Math.random().toString().slice(2)}`
+const chatAdress = `${communicationPlatformAdress}${Math.random().toString().slice(2)}`
     const [ pair, ...restPairs] = pairs
 
     const [person1, person2] = pair
@@ -67,29 +67,3 @@ export default (
 
   transporterCallback(pairs, {})(null, {})
 }
-
-
-// transporter.sendMail({ from: 'info@ycg.org.ua', subject: 'hi', to: 'markian.ivanichok@gmail.com', html: createEmailText(), attachments: [{
-//         filename: 'image.png',
-//   path: 'images/DDoqyjePaF4.jpg',
-//         cid: 'mainImage' //same cid value as in the html img src
-//     }]}, usualTransporterCallback())
-
-// export default (
-//   pairs, 
-//   communicationPlatformAdress = 'https://talky.io/',
-//   mailOptions = {
-//     from: 'markian.ivanichok@gmail.com',
-//     subject: 'Algorithm test',
-//   },
-// ) => { pairs.forEach( pair => { 
-//     const chatAdress = `${communicationPlatformAdress}${Math.random().toString().slice(2)}`
-//     pair.forEach( person => {
-//       transporter.sendMail({ 
-//         ...mailOptions, 
-//         to: person.email,
-//         text: `Hello! Please visit the link - ${chatAdress}`  
-//       }, transporterCallback(person.email))
-//     })
-//   })
-// }
