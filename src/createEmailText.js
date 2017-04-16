@@ -6,9 +6,6 @@ export default (personToPairEmail, videoPlatformLink, imageSrc='cid:mainImage') 
 <p>Щодо точного часу бесіди Ви зможете домовитися на пошті: ${personToPairEmail}.<br>
 Просимо Вас якнайшвидше вийти на зв’язок з Вашим партнером та обрати зручний для вас час для спілкування!</p>
 
-<p>Якщо у Вас виникли проблеми і ви не змогли вийти на звя’зок зі своїм співрозмовником, заповніть анкету:<br>
-https://docs.google.com/forms/d/e/1FAIpQLSd_ps1Iig5EfEYsyVmbFzCu6-vKweaLJXRXDWk93CprJI4Xlw/viewform</p>
-
 <p>Звертайтеся з питаннями та побажаннями до нас на пошту:
 info@ycg.org.ua</p>
 

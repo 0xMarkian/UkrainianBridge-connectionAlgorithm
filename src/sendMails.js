@@ -2,8 +2,8 @@ const nodemailer = require('nodemailer')
 const xoauth2 = require('xoauth2')
 
 import createEmailText from './createEmailText.js'
-import logger from './logger'
-import credentials from './config/credentials'
+import logger from '../logger'
+import credentials from '../config/credentials'
 
 let transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -16,7 +16,7 @@ let transporter = nodemailer.createTransport({
 
 const usualTransporterCallback = email => (error, info) => {
   if (error) {
-    return console.log(error);
+    return console.error(error);
   }
   const message = `Message ${info.messageId} sent: ${info.response} ; ${email}` 
   console.log(message);

@@ -46,21 +46,19 @@ export default class Form {
 
   static sortByRegion = persons => persons.sort( ({ region: regionA },{ region: regionB }) => regionA < regionB ? -1 : regionA === regionB ? 0 : 1) 
   static sortByActivism = persons => persons.sort( ({ activist: activistA }, { activist: activistB }) => 
-    activistA && !activistB ? -1 : 1
-  )
+    activistA && !activistB ? -1 : 1)
 
   makePersonsAmountEven = persons => persons.length % 2 === 0 ? persons : [...persons, this.reservePerson]
   
   mapPersonsKeys = ( 
     persons, 
     mapper = { 
-      email: 'Ваш E-mail', 
       activist: 'Чи залучені Ви у громадську діяльність/Вовлечены ли Вы в общественную деятельность',
     },
   ) => persons.map( person => ({ 
     ...person, 
-    email: person[mapper.email],
-    activist: !!(person[mapper.activist].indexOf('Так') > -1)
+    email: person[this.excelData.emailKeyName],
+    activist: !person[mapper.activist] ? false : !!(person[mapper.activist].indexOf('Так') > -1)
   }))
 
   getPersonsFromExel = () => {
@@ -68,6 +66,8 @@ export default class Form {
 
     const workbook = xlsx.readFile(fileName)
     const worksheet = workbook.Sheets[sheetName]
+
+    if(!worksheet) throw new Error(`Can't find the worksheet or excel file.`)
 
     return xlsx.utils.sheet_to_json(worksheet)
   }
@@ -88,6 +88,8 @@ export default class Form {
   }
 
   separateByRegions = unsortedPersons => {
+    if(unsortedPersons.length === 0) return []
+
     const persons = Form.sortByRegion(this.injectRegionNumbers(unsortedPersons))
 
     const latestRegion = persons[persons.length -1].region
@@ -107,9 +109,6 @@ export default class Form {
     const [smallestRegion, ...restRegions] = regions.sort( (regionA, regionB) => regionA.length > regionB.length  )
 
     const quotaPerRegion = smallestRegion.length/restRegions.length
-    // console.log(smallestRegion[0] ? smallestRegion[0].region : null)
-    // restRegions.forEach( region => console.log(region[0].region) )
-    // console.log('\n\n')
 
     const regionToIndex = {}
 

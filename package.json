@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "serve": "babel-node index.js",
+    "start": "babel-node index.js",
     "watch": "nodemon --exec babel-node index.js",
     "dist": "babel index.js --out-file dist/app.js"
   },
